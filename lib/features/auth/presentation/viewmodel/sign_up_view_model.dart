@@ -21,7 +21,7 @@ class SignUpViewModel extends StateNotifier<SignUpState> {
     try {
       final user = await _signUpWithSocialAccountUseCase.call(
         nickname: nickname,
-        mbti: mbti,
+
         profileImage: profileImagePath,
       );
 

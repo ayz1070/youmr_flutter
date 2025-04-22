@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
-import '../dto/member_dto.dart';
+import '../dto/member_response.dart';
 import '../dto/social_sign_up_request_dto.dart';
 import 'member_data_source.dart';
 
@@ -20,18 +20,18 @@ class MemberRemoteDataSource implements MemberDataSource {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          logger.i('➡️ [Request] ${options.method} ${options.uri}');
+          logger.i('[Request] ${options.method} ${options.uri}');
           logger.d('Headers: ${options.headers}');
           logger.d('Body: ${options.data}');
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          logger.i('⬅️ [Response] ${response.statusCode} ${response.requestOptions.uri}');
+          logger.i('[Response] ${response.statusCode} ${response.requestOptions.uri}');
           logger.d('Response Data: ${response.data}');
           return handler.next(response);
         },
         onError: (DioException e, handler) {
-          logger.e('❌ [Error] ${e.message}');
+          logger.e('[Error] ${e.message}');
           if (e.response != null) {
             logger.e('Error Response: ${e.response?.data}');
           }
@@ -42,14 +42,14 @@ class MemberRemoteDataSource implements MemberDataSource {
   }
 
   @override
-  Future<MemberDto> signUpWithSocial(SocialSignUpRequestDto request) async {
+  Future<MemberResponse> signUpWithSocial(SocialSignUpRequestDto request) async {
     try {
       final response = await dio.post(
         '/api/v1/members/signup/social',
         data: request.toJson(),
       );
 
-      return MemberDto.fromJson(response.data);
+      return MemberResponse.fromJson(response.data);
     } on DioException catch (e) {
       logger.e(_handleDioError(e, '회원가입 실패'));
       throw Exception(_handleDioError(e, '회원가입 실패'));
@@ -57,11 +57,11 @@ class MemberRemoteDataSource implements MemberDataSource {
   }
 
   @override
-  Future<MemberDto> fetchMember(int memberId) async {
+  Future<MemberResponse> fetchMember(int memberId) async {
     try {
       final response = await dio.get('/api/v1/members/$memberId');
 
-      return MemberDto.fromJson(response.data);
+      return MemberResponse.fromJson(response.data);
     } on DioException catch (e) {
       logger.e(_handleDioError(e, '회원 정보 조회 실패'));
       throw Exception(_handleDioError(e, '회원 정보 조회 실패'));
@@ -73,7 +73,7 @@ class MemberRemoteDataSource implements MemberDataSource {
     try {
       final response = await dio.delete('/api/v1/members/$memberId');
       if (response.statusCode != 200) {
-        logger.w('⚠️ 회원 삭제 실패: ${response.statusCode}');
+        logger.w('회원 삭제 실패: ${response.statusCode}');
         throw Exception('회원 삭제 실패: ${response.statusCode}');
       }
     } on DioException catch (e) {

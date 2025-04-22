@@ -1,9 +1,9 @@
-import '../entity/user_entity.dart';
+import '../entity/member_entity.dart';
 
 abstract class MemberRepository {
-  Future<UserEntity> signUpWithSocial(UserEntity userEntity);
+  Future<MemberEntity> signUpWithSocial(MemberEntity memberEntity);
 
-  Future<UserEntity> fetchMember(int memberId);
+  Future<MemberEntity> fetchMember(int memberId);
 
   Future<void> deleteMember(int memberId);
 }

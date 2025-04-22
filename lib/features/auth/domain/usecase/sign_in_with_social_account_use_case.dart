@@ -1,4 +1,4 @@
-import '../entity/user_entity.dart';
+import '../entity/member_entity.dart';
 import '../repository/member_repository.dart';
 
 class SignInWithSocialAccountUseCase {
