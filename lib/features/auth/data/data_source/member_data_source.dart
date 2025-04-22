@@ -1,8 +1,8 @@
-import '../dto/member_dto.dart';
+import '../dto/member_response.dart';
 import '../dto/social_sign_up_request_dto.dart';
 
 abstract class MemberDataSource {
-  Future<MemberDto> signUpWithSocial(SocialSignUpRequestDto request);
-  Future<MemberDto> fetchMember(int memberId);
+  Future<MemberResponse> signUpWithSocial(SocialSignUpRequestDto request);
+  Future<MemberResponse> fetchMember(int memberId);
   Future<void> deleteMember(int memberId);
 }

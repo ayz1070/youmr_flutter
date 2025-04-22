@@ -1,7 +1,7 @@
-import '../../domain/entity/user_entity.dart';
+import '../../domain/entity/member_entity.dart';
 import '../../domain/repository/member_repository.dart';
 import '../data_source/member_data_source.dart';
-import '../dto/member_dto.dart';
+import '../dto/member_response.dart';
 import '../dto/social_sign_up_request_dto.dart';
 
 class MemberRepositoryImpl implements MemberRepository {
@@ -10,23 +10,23 @@ class MemberRepositoryImpl implements MemberRepository {
   MemberRepositoryImpl({required this.dataSource});
 
   @override
-  Future<UserEntity> signUpWithSocial(UserEntity userEntity) async {
+  Future<MemberEntity> signUpWithSocial(MemberEntity memberEntity) async {
     final requestDto = SocialSignUpRequestDto(
-      provider: userEntity.provider?.name ?? '',
-      socialId: userEntity.providerId ?? '',
-      nickname: userEntity.nickname,
-      profileImageUrl: userEntity.profileImage,
-      mbti: userEntity.mbti,
+      provider: memberEntity.provider.name,
+      socialId: memberEntity.socialId,
+      name: memberEntity.name,
+      nickname: memberEntity.nickname,
+      profileImageUrl: memberEntity.profileImage,
     );
 
-    final MemberDto response = await dataSource.signUpWithSocial(requestDto);
-    return response.toEntity();
+    final response = await dataSource.signUpWithSocial(requestDto);
+    return response.toEntity(); // MemberResponse → MemberEntity
   }
 
   @override
-  Future<UserEntity> fetchMember(int memberId) async {
-    final MemberDto response = await dataSource.fetchMember(memberId);
-    return response.toEntity(); // DTO → Entity 변환
+  Future<MemberEntity> fetchMember(int memberId) async {
+    final response = await dataSource.fetchMember(memberId);
+    return response.toEntity();
   }
 
   @override
