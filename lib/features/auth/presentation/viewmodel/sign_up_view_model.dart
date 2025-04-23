@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:youmr_flutter/core/constants/social_provider.dart';
 
 import '../../domain/usecase/sign_up_with_social_account_use_case.dart';
 import '../state/sign_up_state.dart';
@@ -20,8 +21,10 @@ class SignUpViewModel extends StateNotifier<SignUpState> {
 
     try {
       final user = await _signUpWithSocialAccountUseCase.call(
+        socialId: "",
         nickname: nickname,
-
+        provider: SocialProvider.KAKAO,
+        name: "",
         profileImage: profileImagePath,
       );
 
@@ -41,13 +44,13 @@ class SignUpViewModel extends StateNotifier<SignUpState> {
     }
   }
 
-  // ✅ 닉네임 변경 로그 추가
+  // 닉네임 변경 로그 추가
   void updateNickname(String nickname) {
     state = state.copyWith(nickname: nickname);
     logState();
   }
 
-  // ✅ MBTI 변경 로그 추가
+  // MBTI 변경 로그 추가
   void updateMbti(String mbti) {
     state = state.copyWith(mbti: mbti);
     logState();
