@@ -1,5 +1,5 @@
 import '../../../../core/constants/social_provider.dart';
-import 'member_role.dart';
+import 'role.dart';
 
 class MemberEntity {
   final int? id;
@@ -8,7 +8,7 @@ class MemberEntity {
   final String name;
   final String nickname;
   final String profileImage;
-  final MemberRole? role;
+  final Role? role;
 
   const MemberEntity({
     this.id,
@@ -27,7 +27,7 @@ class MemberEntity {
     String? name,
     String? nickname,
     String? profileImage,
-    MemberRole? role,
+    Role? role,
   }) {
     return MemberEntity(
       id: id ?? this.id,

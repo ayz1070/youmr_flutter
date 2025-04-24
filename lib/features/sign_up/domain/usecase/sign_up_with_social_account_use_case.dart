@@ -1,5 +1,6 @@
 import '../../../../core/constants/social_provider.dart';
 import '../entity/member_entity.dart';
+import '../entity/role.dart';
 import '../repository/member_repository.dart';
 
 class SignUpWithSocialAccountUseCase {
@@ -14,6 +15,7 @@ class SignUpWithSocialAccountUseCase {
     required String name,
     required String nickname,
     required String profileImage,
+    required Role role,
   }) async {
     final member = MemberEntity(
       socialId: socialId,
@@ -21,6 +23,7 @@ class SignUpWithSocialAccountUseCase {
       name: name,
       nickname: nickname,
       profileImage: profileImage,
+      role: role,
     );
 
     return await memberRepository.signUpWithSocial(member);
