@@ -1,6 +1,9 @@
 import 'package:go_router/go_router.dart';
-import '../../features/auth/presentation/pages/sign_in_page.dart';
-import '../../features/auth/presentation/pages/sign_up_page.dart';
+
+import '../../features/home/presentation/page/home_page.dart';
+import '../../features/sign_up/presentation/pages/sign_in_page.dart';
+import '../../features/sign_up/presentation/pages/sign_up_page.dart';
+
 
 final GoRouter router = GoRouter(
   routes: [
@@ -12,6 +15,11 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => SignInPage(),
+    ),
+
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => HomePage(),
     ),
   ],
 );

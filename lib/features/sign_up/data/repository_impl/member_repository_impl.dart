@@ -12,7 +12,7 @@ class MemberRepositoryImpl implements MemberRepository {
   @override
   Future<MemberEntity> signUpWithSocial(MemberEntity memberEntity) async {
     final requestDto = SocialSignUpRequestDto(
-      provider: memberEntity.provider.name,
+      provider: memberEntity.provider,
       socialId: memberEntity.socialId,
       name: memberEntity.name,
       nickname: memberEntity.nickname,

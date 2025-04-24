@@ -5,6 +5,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:logger/logger.dart';
 
 import '../../../../../core/di/auth_module.dart';
+import '../../../../core/constants/social_provider.dart';
 
 class SignInPage extends ConsumerWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -16,7 +17,6 @@ class SignInPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(signInViewModelProvider);
     final viewModel = ref.read(signInViewModelProvider.notifier);
-
 
     return Scaffold(
       backgroundColor: Color(0xFFB7C9BC),
@@ -30,12 +30,26 @@ class SignInPage extends ConsumerWidget {
               const Spacer(),
               InkWell(
                 onTap: () async {
-                  final account = await kakaoLogin();
+                  final kakaoUser = await kakaoLogin();
+                  final account = kakaoUser?.kakaoAccount;
+
                   if (account != null) {
-                    // 성공! 회원가입 또는 서버에 로그인 정보 전달
+                    // 1. 카카오 정보 추출
+                    final name = account.profile?.nickname ?? '';
+                    final profileImage = account.profile?.profileImageUrl ?? '';
+                    final socialId = kakaoUser?.id.toString() ?? '';
+                    final provider = SocialProvider.KAKAO;
+
+                    final signUpViewModel = ref.read(signUpViewModelProvider.notifier);
+                    signUpViewModel.updateName(name);
+                    signUpViewModel.updateProfileImage(profileImage);
+                    signUpViewModel.updateSocialId(socialId);
+                    signUpViewModel.updateProvider(provider);
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('카카오 로그인 성공')),
                     );
+
                     context.push('/sign-up');
                   } else {
                     // 실패!
@@ -43,8 +57,6 @@ class SignInPage extends ConsumerWidget {
                       const SnackBar(content: Text('카카오 로그인 실패')),
                     );
                   }
-
-
                 },
                 borderRadius: BorderRadius.circular(10), // 터치 효과 반경
                 child: Ink(
@@ -63,7 +75,7 @@ class SignInPage extends ConsumerWidget {
   }
 
 
-  Future<Account?> kakaoLogin() async {
+  Future<User?> kakaoLogin() async {
     try {
       if (await isKakaoTalkInstalled()) {
         await UserApi.instance.loginWithKakaoTalk();
@@ -74,13 +86,13 @@ class SignInPage extends ConsumerWidget {
       }
 
       final user = await UserApi.instance.me();
-      _logger.i('카카오 로그인 성공!');
+      _logger.i('카카오 로그인 성공');
       _logger.i('카카오ID: ${user.id}');
       _logger.i('닉네임: ${user.kakaoAccount?.profile?.nickname}');
       _logger.i('이메일: ${user.kakaoAccount?.email}');
       _logger.i('프로필사진: ${user.kakaoAccount?.profile?.profileImageUrl}');
 
-      return user.kakaoAccount;
+      return user;
     } catch (e, stack) {
       _logger.e('카카오 로그인 실패', error:e);
       return null;

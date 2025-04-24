@@ -45,7 +45,7 @@ class MemberRemoteDataSource implements MemberDataSource {
   Future<MemberResponse> signUpWithSocial(SocialSignUpRequestDto request) async {
     try {
       final response = await dio.post(
-        '/api/v1/members/signup/social',
+        '/api/v1/members/signup',
         data: request.toJson(),
       );
 

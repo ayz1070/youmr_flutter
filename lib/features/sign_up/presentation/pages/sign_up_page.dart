@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
 import '../../../../../core/di/auth_module.dart';
 import '../widgets/sign_up_elevated_button.dart';
+import '../widgets/sign_up_member_check_step.dart';
 import '../widgets/sign_up_nickname_step.dart';
 import '../widgets/sign_up_profile_image_step.dart';
+import '../widgets/sign_up_welcome_step.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
-
-
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
@@ -19,10 +20,7 @@ class SignUpPage extends ConsumerStatefulWidget {
 class _SignUpPageState extends ConsumerState<SignUpPage> {
   final PageController _pageController = PageController();
   final TextEditingController _nicknameController = TextEditingController();
-  String? _selectedMbti;
-  String? _profileImagePath;
   int _currentStep = 0;
-
 
   void _nextStep() {
     if (_currentStep < 2) {
@@ -47,36 +45,26 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   void _signUp() async {
     final viewModel = ref.read(signUpViewModelProvider.notifier);
 
-    if (_nicknameController.text.isEmpty ||
-        _selectedMbti == null ||
-        _profileImagePath == null) {
+    if (_nicknameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('모든 필드를 입력해주세요!')),
+        const SnackBar(content: Text('닉네임을 입력해주세요!')),
       );
       return;
     }
 
-    final success = await viewModel.signUp(
-      nickname: _nicknameController.text,
-      mbti: _selectedMbti!,
-      profileImagePath: _profileImagePath!,
-    );
+    final success = await viewModel.signUp();
 
     if (success) {
-      Navigator.pop(context);
+      context.go('/home');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('회원가입에 실패했습니다. 다시 시도해주세요.')),
       );
     }
-
-
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(signUpViewModelProvider);
-
     return Scaffold(
       appBar: AppBar(title: const Text('회원 가입')),
       body: Column(
@@ -86,12 +74,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
+                const SignUpWelcomeStep(),
                 SignUpNicknameStep(controller: _nicknameController),
-                SignUpProfileImageStep(
-                  profileImagePath: _profileImagePath,
-                  onPickImage: (imagePath) =>
-                      setState(() => _profileImagePath = imagePath),
-                ),
+                const SignUpMemberCheckStep(),
               ],
             ),
           ),
@@ -102,11 +87,15 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               children: [
                 _currentStep > 0
                     ? SignUpElevatedButton(
-                        icon: Icons.arrow_back, onPressed: _previousStep)
+                  icon: Icons.arrow_back,
+                  onPressed: _previousStep,
+                )
                     : const SizedBox.shrink(),
-                _currentStep < 1
-                    ? SignUpElevatedButton(icon: Icons.arrow_forward, onPressed: _nextStep)
-                    : SignUpElevatedButton(icon: Icons.done, onPressed: _signUp)
+                _currentStep < 2
+                    ? SignUpElevatedButton(
+                    icon: Icons.arrow_forward, onPressed: _nextStep)
+                    : SignUpElevatedButton(
+                    icon: Icons.done, onPressed: _signUp)
               ],
             ),
           ),
