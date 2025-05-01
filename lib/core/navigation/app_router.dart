@@ -13,12 +13,12 @@ final GoRouter router = GoRouter(
     ),
 
     GoRoute(
-      path: '/',
+      path: '/sign-in',
       builder: (context, state) => SignInPage(),
     ),
 
     GoRoute(
-      path: '/home',
+      path: '/',
       builder: (context, state) => HomePage(),
     ),
   ],
