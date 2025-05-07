@@ -11,22 +11,25 @@ import '../../features/attendance/domain/usecase/fetch_attendance_use_case.dart'
 import '../../features/attendance/presentation/state/attendance_state.dart';
 import '../../features/attendance/presentation/viewmodel/attendance_view_model.dart';
 
-
 /// 1. Dio Provider (공통 네트워크 모듈에서 이미 존재한다면 생략 가능)
 final dioProvider = Provider<Dio>((ref) {
-  return Dio(BaseOptions(
-    baseUrl: 'http://localhost:8080/api/v1', // ✅ 실제 서버 주소로 수정
-    connectTimeout: const Duration(seconds: 10),
-    receiveTimeout: const Duration(seconds: 10),
-    headers: {'Content-Type': 'application/json'},
-  ));
+  return Dio(
+    BaseOptions(
+      baseUrl: AppConfig.baseUrl, // ✅ 실제 서버 주소로 수정
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+      headers: {'Content-Type': 'application/json'},
+    ),
+  );
 });
 
 /// 2. AttendanceRemoteDataSource Provider
-final attendanceRemoteDataSourceProvider = Provider<AttendanceRemoteDataSource>((ref) {
-  final dio = ref.watch(dioProvider);
-  return AttendanceRemoteDataSource(baseUrl: AppConfig.baseUrl);
-});
+final attendanceRemoteDataSourceProvider = Provider<AttendanceRemoteDataSource>(
+  (ref) {
+    final dio = ref.watch(dioProvider);
+    return AttendanceRemoteDataSource(baseUrl: AppConfig.baseUrl);
+  },
+);
 
 /// 3. AttendanceRepository Provider
 final attendanceRepositoryProvider = Provider<AttendanceRepository>((ref) {
@@ -35,27 +38,35 @@ final attendanceRepositoryProvider = Provider<AttendanceRepository>((ref) {
 });
 
 /// 4. CreateAttendanceUseCase Provider
-final createAttendanceUseCaseProvider = Provider<CreateAttendanceUseCase>((ref) {
+final createAttendanceUseCaseProvider = Provider<CreateAttendanceUseCase>((
+  ref,
+) {
   final repository = ref.watch(attendanceRepositoryProvider);
   return CreateAttendanceUseCase(repository);
 });
 
 /// 5. FetchAttendancesUseCase Provider
-final fetchAttendancesUseCaseProvider = Provider<FetchAttendancesUseCase>((ref) {
+final fetchAttendancesUseCaseProvider = Provider<FetchAttendancesUseCase>((
+  ref,
+) {
   final repository = ref.watch(attendanceRepositoryProvider);
   return FetchAttendancesUseCase(repository);
 });
 
 /// 6. DeleteAttendanceUseCase Provider
-final deleteAttendanceUseCaseProvider = Provider<DeleteAttendanceUseCase>((ref) {
+final deleteAttendanceUseCaseProvider = Provider<DeleteAttendanceUseCase>((
+  ref,
+) {
   final repository = ref.watch(attendanceRepositoryProvider);
   return DeleteAttendanceUseCase(repository);
 });
 
 /// 7. AttendanceViewModel Provider (StateNotifierProvider)
-final attendanceViewModelProvider = StateNotifierProvider<AttendanceViewModel, AttendanceState>(
+final attendanceViewModelProvider =
+    StateNotifierProvider<AttendanceViewModel, AttendanceState>(
       (ref) => AttendanceViewModel(
-    createAttendanceUseCase: ref.watch(createAttendanceUseCaseProvider),
-    fetchAttendancesUseCase: ref.watch(fetchAttendancesUseCaseProvider),
-  ),
-);
+        createAttendanceUseCase: ref.watch(createAttendanceUseCaseProvider),
+        fetchAttendancesUseCase: ref.watch(fetchAttendancesUseCaseProvider),
+        deleteAttendanceUseCase: ref.watch(deleteAttendanceUseCaseProvider),
+      ),
+    );
