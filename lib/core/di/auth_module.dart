@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youmr_flutter/core/di/dio_provider.dart';
 
 import '../../features/sign_up/data/data_source/member_data_source.dart';
 import '../../features/sign_up/data/data_source/member_remote_data_source.dart';
@@ -10,11 +11,10 @@ import '../../features/sign_up/presentation/state/sign_in_state.dart';
 import '../../features/sign_up/presentation/state/sign_up_state.dart';
 import '../../features/sign_up/presentation/viewmodel/sign_in_view_model.dart';
 import '../../features/sign_up/presentation/viewmodel/sign_up_view_model.dart';
-import '../constants/app_config.dart';
 
 
 final memberDataSourceProvider = Provider<MemberDataSource>((ref) {
-  return MemberRemoteDataSource(baseUrl: AppConfig.baseUrl);
+  return MemberRemoteDataSource(dio: ref.read(dioProvider));
 });
 
 final memberRepositoryProvider = Provider<MemberRepository>((ref){
