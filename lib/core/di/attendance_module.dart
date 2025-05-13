@@ -10,34 +10,19 @@ import '../../features/attendance/domain/usecase/delete_attendance_use_case.dart
 import '../../features/attendance/domain/usecase/fetch_attendance_use_case.dart';
 import '../../features/attendance/presentation/state/attendance_state.dart';
 import '../../features/attendance/presentation/viewmodel/attendance_view_model.dart';
+import 'dio_provider.dart';
 
-/// 1. Dio Provider (공통 네트워크 모듈에서 이미 존재한다면 생략 가능)
-final dioProvider = Provider<Dio>((ref) {
-  return Dio(
-    BaseOptions(
-      baseUrl: AppConfig.baseUrl, // ✅ 실제 서버 주소로 수정
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-      headers: {'Content-Type': 'application/json'},
-    ),
-  );
-});
-
-/// 2. AttendanceRemoteDataSource Provider
 final attendanceRemoteDataSourceProvider = Provider<AttendanceRemoteDataSource>(
   (ref) {
-    final dio = ref.watch(dioProvider);
-    return AttendanceRemoteDataSource(baseUrl: AppConfig.baseUrl);
+    return AttendanceRemoteDataSource(dio: ref.watch(dioProvider));
   },
 );
 
-/// 3. AttendanceRepository Provider
 final attendanceRepositoryProvider = Provider<AttendanceRepository>((ref) {
   final remoteDataSource = ref.watch(attendanceRemoteDataSourceProvider);
   return AttendanceRepositoryImpl(remoteDataSource: remoteDataSource);
 });
 
-/// 4. CreateAttendanceUseCase Provider
 final createAttendanceUseCaseProvider = Provider<CreateAttendanceUseCase>((
   ref,
 ) {
@@ -45,7 +30,6 @@ final createAttendanceUseCaseProvider = Provider<CreateAttendanceUseCase>((
   return CreateAttendanceUseCase(repository);
 });
 
-/// 5. FetchAttendancesUseCase Provider
 final fetchAttendancesUseCaseProvider = Provider<FetchAttendancesUseCase>((
   ref,
 ) {
@@ -53,7 +37,6 @@ final fetchAttendancesUseCaseProvider = Provider<FetchAttendancesUseCase>((
   return FetchAttendancesUseCase(repository);
 });
 
-/// 6. DeleteAttendanceUseCase Provider
 final deleteAttendanceUseCaseProvider = Provider<DeleteAttendanceUseCase>((
   ref,
 ) {
@@ -61,7 +44,6 @@ final deleteAttendanceUseCaseProvider = Provider<DeleteAttendanceUseCase>((
   return DeleteAttendanceUseCase(repository);
 });
 
-/// 7. AttendanceViewModel Provider (StateNotifierProvider)
 final attendanceViewModelProvider =
     StateNotifierProvider<AttendanceViewModel, AttendanceState>(
       (ref) => AttendanceViewModel(
