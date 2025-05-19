@@ -46,6 +46,10 @@ dependencies:
   flutter_local_notifications: ^19.2.0
   permission_handler:
 
+  firebase_auth:
+
+  equatable:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

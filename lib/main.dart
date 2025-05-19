@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:youmr_flutter/core/util/app_logger.dart';
 import 'core/navigation/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/test/notification_service.dart';
@@ -20,6 +22,10 @@ void main() async{
   await NotificationService.initialize(); // 추가
 
   KakaoSdk.init(nativeAppKey: "6a5a8f251a4aeec1c6d5db62830f9528");
+
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  AppLogger.i("파이어베이스 메시지 토큰 : ${fcmToken}");
+
 
   runApp(
     ProviderScope(

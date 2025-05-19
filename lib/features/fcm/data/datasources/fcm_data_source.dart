@@ -1,5 +1,5 @@
-import 'package:cosetic1/features/fcm/data/dto/fcm_token_response.dart';
 
+import '../dto/fcm_token_response.dart';
 import '../dto/purchase_notification_request.dart';
 import '../dto/refresh_fcm_token_request.dart';
 
@@ -18,5 +18,4 @@ abstract class FcmDataSource {
   });
 
   Future<FcmTokenResponse> fetchFcmTokenByMember({required String memberId});
-
 }

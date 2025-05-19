@@ -1,8 +1,8 @@
-import 'package:cosetic1/features/fcm/domain/entity/fcm_token_entity.dart';
 
 import '../../data/dto/purchase_notification_request.dart';
 import '../../data/dto/refresh_fcm_token_request.dart';
 import '../../domain/entity/device_type.dart';
+import '../../domain/entity/fcm_token_entity.dart';
 import '../../domain/repository/fcm_repository.dart';
 import '../datasources/fcm_data_source.dart';
 

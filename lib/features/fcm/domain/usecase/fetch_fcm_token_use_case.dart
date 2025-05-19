@@ -1,5 +1,4 @@
-import 'package:cosetic1/features/fcm/domain/entity/fcm_token_entity.dart';
-
+import '../entity/fcm_token_entity.dart';
 import '../repository/fcm_repository.dart';
 
 class FetchFcmTokenUseCase {

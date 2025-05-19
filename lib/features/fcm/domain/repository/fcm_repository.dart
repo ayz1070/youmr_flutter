@@ -1,6 +1,6 @@
-import 'package:cosetic1/features/fcm/domain/entity/fcm_token_entity.dart';
 
 import '../entity/device_type.dart';
+import '../entity/fcm_token_entity.dart';
 
 abstract class FcmRepository {
   Future<bool> refreshFcmToken({
