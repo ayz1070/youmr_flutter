@@ -84,4 +84,20 @@ class FcmNotifier extends StateNotifier<FcmState> {
       // 상태 무시 가능
     }
   }
+
+  Future<void> syncFcmTokenIfNeeded() async {
+    final token = await FirebaseMessaging.instance.getToken();
+    final memberId = FirebaseAuth.instance.currentUser?.email;
+    if (token == null || memberId == null) return;
+
+    final serverToken = await fetchFcmTokenUseCase(memberId);
+    if (serverToken.token != token || !serverToken.isActive) {
+      final deviceType = Platform.isAndroid ? DeviceType.ANDROID : DeviceType.IOS;
+      await refreshFcmTokenUseCase(
+        memberId: memberId,
+        token: token,
+        deviceType: deviceType,
+      );
+    }
+  }
 }
