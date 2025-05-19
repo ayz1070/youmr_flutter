@@ -8,12 +8,15 @@ import '../../features/test/test_page.dart';
 final GoRouter router = GoRouter(
   routes: [
     // 테스트 라우팅
-    GoRoute(path: '/', builder: (context, state) => TestPage()),
+    GoRoute(path: '/', builder: (context, state) => HomePage()),
 
     GoRoute(path: '/sign-up', builder: (context, state) => SignUpPage()),
 
     GoRoute(path: '/sign-in', builder: (context, state) => SignInPage()),
 
     GoRoute(path: '/home', builder: (context, state) => HomePage()),
+
+
+    // 관리자 라우팅
   ],
 );

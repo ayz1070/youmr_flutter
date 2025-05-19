@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/di/fcm_provider.dart';
 import '../../../attendance/presentation/pages/attendance_page.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   int _selectedIndex = 0;
+  bool _fcmInitialized = false;
 
   final List<Widget> _pages = const [
     BoardPage(),
     AttendancePage(),
     MyPage(),
   ];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_fcmInitialized) {
+      _fcmInitialized = true;
+
+      /// FCM 토큰을 확인하고 서버에 저장하는 로직 수행
+      ref.read(fcmNotifierProvider.notifier).syncFcmTokenIfNeeded();
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -50,7 +65,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// 아래는 임시로 비어 있는 페이지 예시
+// 임시 페이지는 그대로 유지
 class BoardPage extends StatelessWidget {
   const BoardPage({Key? key}) : super(key: key);
 
@@ -59,8 +74,6 @@ class BoardPage extends StatelessWidget {
     return const Center(child: Text('게시판 페이지'));
   }
 }
-
-
 
 class MyPage extends StatelessWidget {
   const MyPage({Key? key}) : super(key: key);
