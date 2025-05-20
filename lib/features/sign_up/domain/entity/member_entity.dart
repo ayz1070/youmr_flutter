@@ -1,3 +1,5 @@
+import 'package:youmr_flutter/features/sign_up/domain/entity/week_type.dart';
+
 import '../../../../core/constants/social_provider.dart';
 import 'role.dart';
 
@@ -9,6 +11,7 @@ class MemberEntity {
   final String nickname;
   final String profileImage;
   final Role? role;
+  final WeekType? weekType;
 
   const MemberEntity({
     this.id,
@@ -17,6 +20,7 @@ class MemberEntity {
     required this.name,
     required this.nickname,
     required this.profileImage,
+    this.weekType,
     this.role,
   });
 
@@ -28,6 +32,7 @@ class MemberEntity {
     String? nickname,
     String? profileImage,
     Role? role,
+    WeekType? weekType,
   }) {
     return MemberEntity(
       id: id ?? this.id,
@@ -37,6 +42,7 @@ class MemberEntity {
       nickname: nickname ?? this.nickname,
       profileImage: profileImage ?? this.profileImage,
       role: role ?? this.role,
+      weekType: weekType ?? this.weekType,
     );
   }
 }

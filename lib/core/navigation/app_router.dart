@@ -8,7 +8,7 @@ import '../../features/test/test_page.dart';
 final GoRouter router = GoRouter(
   routes: [
     // 테스트 라우팅
-    GoRoute(path: '/', builder: (context, state) => HomePage()),
+    GoRoute(path: '/', builder: (context, state) => SignInPage()),
 
     GoRoute(path: '/sign-up', builder: (context, state) => SignUpPage()),
 

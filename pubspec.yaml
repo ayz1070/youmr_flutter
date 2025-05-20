@@ -40,13 +40,18 @@ dependencies:
   kakao_flutter_sdk_auth:
 
   flutter_dotenv:
+
+
+  # 파이어베이스 관련
   firebase_core: ^3.13.0
   firebase_messaging:
+  firebase_auth:
+  google_sign_in:
+
 
   flutter_local_notifications: ^19.2.0
   permission_handler:
 
-  firebase_auth:
 
   equatable:
 

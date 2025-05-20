@@ -78,6 +78,9 @@ class _Material3NicknameTextField extends ConsumerWidget {
     // Material 3 TextField: filled, outline, label 스타일 반영
     return TextField(
       controller: controller,
+      onChanged: (value) {
+        ref.read(signUpViewModelProvider.notifier).updateNickname(value);
+      },
       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black87),
       decoration: InputDecoration(
         labelText: '닉네임을 입력하세요',

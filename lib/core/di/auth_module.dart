@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youmr_flutter/core/di/dio_provider.dart';
+import 'package:youmr_flutter/features/sign_up/data/service/social_auth_service.dart';
 
 import '../../features/sign_up/data/data_source/member_data_source.dart';
 import '../../features/sign_up/data/data_source/member_remote_data_source.dart';
@@ -15,6 +16,10 @@ import '../../features/sign_up/presentation/viewmodel/sign_up_view_model.dart';
 
 final memberDataSourceProvider = Provider<MemberDataSource>((ref) {
   return MemberRemoteDataSource(dio: ref.read(dioProvider));
+});
+
+final socialAuthServiceProvider = Provider<SocialAuthService>((ref) {
+  return SocialAuthService();
 });
 
 final memberRepositoryProvider = Provider<MemberRepository>((ref){
@@ -36,5 +41,5 @@ final signUpViewModelProvider = StateNotifierProvider<SignUpViewModel, SignUpSta
 );
 
 final signInViewModelProvider = StateNotifierProvider<SignInViewModel, SignInState>(
-      (ref) => SignInViewModel(ref.read(signInUseCaseProvider)),
+      (ref) => SignInViewModel(ref.read(socialAuthServiceProvider)),
 );
