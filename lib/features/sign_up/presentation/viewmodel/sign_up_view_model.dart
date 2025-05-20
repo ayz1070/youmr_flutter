@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:youmr_flutter/core/constants/social_provider.dart';
 import '../../domain/entity/role.dart';
+import '../../domain/entity/social_user.dart';
+import '../../domain/entity/week_type.dart';
 import '../../domain/usecase/sign_up_with_social_account_use_case.dart';
 import '../state/sign_up_state.dart';
 
@@ -11,9 +13,13 @@ class SignUpViewModel extends StateNotifier<SignUpState> {
 
   SignUpViewModel(this._signUpWithSocialAccountUseCase) : super(SignUpState());
 
-  // 각 필드별 업데이트 메서드
-  void updateName(String name) {
-    state = state.copyWith(name: name);
+  void updateFromSocialUser(SocialUser user) {
+    state = state.copyWith(
+      name: user.name,
+      profileImage: user.profileImage,
+      socialId: user.socialId,
+      provider: user.provider,
+    );
     logState();
   }
 
@@ -32,18 +38,13 @@ class SignUpViewModel extends StateNotifier<SignUpState> {
     logState();
   }
 
-  void updateProvider(SocialProvider provider) {
-    state = state.copyWith(provider: provider);
-    logState();
-  }
-
-  void updateSocialId(String socialId) {
-    state = state.copyWith(socialId: socialId);
-    logState();
-  }
-
   void updateRole(Role role) {
     state = state.copyWith(role: role);
+    logState();
+  }
+
+  void updateWeekType(WeekType weekType) {
+    state = state.copyWith(weekType: weekType);
     logState();
   }
 
@@ -61,7 +62,7 @@ class SignUpViewModel extends StateNotifier<SignUpState> {
 
     _logger.i("""
       🚀 회원가입 요청:
-      이름: ${state.name}, 닉네임: ${state.nickname}, 이메일: ${state.email},
+      이름: ${state.name}, 닉네임: ${state.nickname}, 
       프로필이미지: ${state.profileImage}, provider: ${state.provider},
       socialId: ${state.socialId}, role: ${state.role}
     """);
@@ -98,7 +99,6 @@ class SignUpViewModel extends StateNotifier<SignUpState> {
     [SignUpState 업데이트]
     이름: ${state.name}
     닉네임: ${state.nickname}
-    이메일: ${state.email}
     프로필 이미지: ${state.profileImage}
     provider: ${state.provider}
     socialId: ${state.socialId}

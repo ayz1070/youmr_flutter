@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import '../../../../core/error/error_handler.dart';
-import '../../../../core/util/app_logger.dart';
 import '../dto/member_response.dart';
 import '../dto/social_sign_up_request_dto.dart';
 import 'member_data_source.dart';
