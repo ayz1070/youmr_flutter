@@ -47,12 +47,13 @@ dependencies:
   firebase_messaging:
   firebase_auth:
   google_sign_in:
-
+  firebase_ui_auth:
+  firebase_ui_oauth_google:
 
   flutter_local_notifications: ^19.2.0
   permission_handler:
 
-
+  sign_in_button:
   equatable:
 
 dev_dependencies:
