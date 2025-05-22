@@ -1,0 +1,1 @@
+enum GeminiSender { user, gemini }

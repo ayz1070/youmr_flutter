@@ -12,7 +12,7 @@ import 'firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized(); // 꼭 추가! (비동기 코드에서 안전)
-  //await dotenv.load();
+  await dotenv.load(fileName: ".env");
 
   // .env에서 환경변수 불러오기
   //final kakaoAppKey = dotenv.env['KAKAO_NATIVE_APP_KEY'] ?? '';

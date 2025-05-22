@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youmr_flutter/features/gemini/presentation/page/gemini_page.dart';
 
 import '../../../../core/di/fcm_provider.dart';
 import '../../../attendance/presentation/pages/attendance_page.dart';
@@ -16,7 +17,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   bool _fcmInitialized = false;
 
   final List<Widget> _pages = const [
-    BoardPage(),
+    GeminiPage(),
     AttendancePage(),
     MyPage(),
   ];
@@ -48,8 +49,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.article),
-            label: '게시판',
+            icon: Icon(Icons.question_mark),
+            label: 'AI',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.check_circle),
