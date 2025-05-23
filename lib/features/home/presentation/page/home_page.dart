@@ -4,6 +4,8 @@ import 'package:youmr_flutter/features/gemini/presentation/page/gemini_page.dart
 
 import '../../../../core/di/fcm_provider.dart';
 import '../../../attendance/presentation/pages/attendance_page.dart';
+import '../../../my/presentation/page/my_page.dart';
+import '../widget/custom_bottom_nav_bar.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -44,43 +46,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.question_mark),
-            label: 'AI',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.check_circle),
-            label: '출석',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '마이페이지',
-          ),
-        ],
       ),
     );
-  }
-}
-
-// 임시 페이지는 그대로 유지
-class BoardPage extends StatelessWidget {
-  const BoardPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('게시판 페이지'));
-  }
-}
-
-class MyPage extends StatelessWidget {
-  const MyPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('마이페이지'));
   }
 }
