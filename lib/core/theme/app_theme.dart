@@ -9,6 +9,7 @@ class AppTheme {
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.background,
     dividerColor: AppColors.divider,
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.background,
       elevation: 0,
