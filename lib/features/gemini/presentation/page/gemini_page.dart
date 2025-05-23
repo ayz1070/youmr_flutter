@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youmr_flutter/core/theme/app_colors.dart';
+import 'package:youmr_flutter/features/gemini/presentation/widget/chat_input_field.dart';
 
 import '../../../../core/di/gemini_provider.dart';
 import '../../domain/entity/gemini_sender.dart';
@@ -63,7 +64,12 @@ class _GeminiPageState extends ConsumerState<GeminiPage> {
                         color: isUser ? AppColors.primary : Colors.grey[200],
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Text(message.text, style: TextStyle(color: isUser ? AppColors.white : Colors.black),),
+                      child: Text(
+                        message.text,
+                        style: TextStyle(
+                          color: isUser ? AppColors.white : Colors.black,
+                        ),
+                      ),
                     ),
                   );
                 } else {
@@ -86,28 +92,8 @@ class _GeminiPageState extends ConsumerState<GeminiPage> {
               },
             ),
           ),
-          const Divider(height: 1),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            color: Colors.white,
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    onSubmitted: (_) => _handleSend(),
-                    decoration: const InputDecoration.collapsed(
-                      hintText: "질문을 입력하세요(예: c코드는 어떻게 잡아?)",
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: _handleSend,
-                ),
-              ],
-            ),
-          ),
+          ChatInputField(controller: _controller, onSend: _handleSend),
+          SizedBox(height: 1),
         ],
       ),
     );
