@@ -62,7 +62,16 @@ dev_dependencies:
   build_runner:
   json_serializable:
 
+  flutter_launcher_icons:
+
   flutter_lints: ^5.0.0
+
+flutter_icons:
+  image_path: "lib/assets/icons/app_icon.png"  # 아이콘 경로
+  android: true
+  ios: true
+  adaptive_icon_background: "#2196F3"
+
 
 flutter:
 
