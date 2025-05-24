@@ -27,25 +27,28 @@ class SocialLoginButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(8),
-          border: borderColor != null ? Border.all(color: borderColor!) : null,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              icon,
-              width: 24,
-              height: 24,
-            ),
-            SizedBox(width: 6),
-            Text(label,
-                style: AppTextStyles.body2.copyWith(color: textColor)),
-          ],
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(8),
+            border: borderColor != null ? Border.all(color: borderColor!) : null,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                icon,
+                width: 24,
+                height: 24,
+              ),
+              SizedBox(width: 6),
+              Text(label,
+                  style: AppTextStyles.body2.copyWith(color: textColor)),
+            ],
+          ),
         ),
       ),
     );
