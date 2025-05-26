@@ -44,7 +44,6 @@ class SignInPage extends ConsumerWidget {
 
             const SizedBox(height: 16),
 
-
             SocialLoginButton(
               icon: 'lib/assets/icons/logo_google.svg',
               label: '구글로 시작하기',
@@ -68,48 +67,6 @@ class SignInPage extends ConsumerWidget {
                 }
               },
             ),
-
-            // // 카카오 로그인
-            // InkWell(
-            //   onTap: () async {
-            //     final user =
-            //         await ref
-            //             .read(signInViewModelProvider.notifier)
-            //             .loginWithKakao();
-            //     if (user != null) {
-            //       ref
-            //           .read(signUpViewModelProvider.notifier)
-            //           .updateFromSocialUser(user);
-            //       context.push('/sign-up');
-            //     } else {
-            //       ScaffoldMessenger.of(
-            //         context,
-            //       ).showSnackBar(const SnackBar(content: Text('카카오 로그인 실패')));
-            //     }
-            //   },
-            //   child: Image.asset('lib/assets/images/btn_kakao.png'),
-            // ),
-
-            const SizedBox(height: 16),
-
-            // GoogleSignInButton(
-            //   onPressed: () async {
-            //     final user =
-            //         await ref
-            //             .read(signInViewModelProvider.notifier)
-            //             .loginWithGoogle();
-            //     if (user != null) {
-            //       ref
-            //           .read(signUpViewModelProvider.notifier)
-            //           .updateFromSocialUser(user);
-            //       context.push('/sign-up');
-            //     } else {
-            //       ScaffoldMessenger.of(
-            //         context,
-            //       ).showSnackBar(const SnackBar(content: Text('구글 로그인 실패')));
-            //     }
-            //   },
-            // ),
 
             const SizedBox(height: 30),
           ],
