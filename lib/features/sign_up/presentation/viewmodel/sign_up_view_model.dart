@@ -61,7 +61,7 @@ class SignUpViewModel extends StateNotifier<SignUpState> {
     state = state.copyWith(isLoading: true, errorMessage: null, isCompleted: false);
 
     _logger.i("""
-      🚀 회원가입 요청:
+      회원가입 요청:
       이름: ${state.name}, 닉네임: ${state.nickname}, 
       프로필이미지: ${state.profileImage}, provider: ${state.provider},
       socialId: ${state.socialId}, role: ${state.role}

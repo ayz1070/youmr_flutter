@@ -6,6 +6,7 @@ import '../../features/sign_up/data/data_source/member_data_source.dart';
 import '../../features/sign_up/data/data_source/member_remote_data_source.dart';
 import '../../features/sign_up/data/repository_impl/member_repository_impl.dart';
 import '../../features/sign_up/domain/repository/member_repository.dart';
+import '../../features/sign_up/domain/usecase/fetch_member_by_social_id_use_case.dart';
 import '../../features/sign_up/domain/usecase/sign_in_with_social_account_use_case.dart';
 import '../../features/sign_up/domain/usecase/sign_up_with_social_account_use_case.dart';
 import '../../features/sign_up/presentation/state/sign_in_state.dart';
@@ -33,6 +34,10 @@ final signUpUseCaseProvider = Provider<SignUpWithSocialAccountUseCase>((ref) {
 
 final signInUseCaseProvider = Provider<SignInWithSocialAccountUseCase>((ref) {
   return SignInWithSocialAccountUseCase();
+});
+
+final fetchMemberBySocialIdUseCase = Provider<FetchMemberBySocialIdUseCase>((ref) {
+  return FetchMemberBySocialIdUseCase(ref.read(memberRepositoryProvider));
 });
 
 // ViewModel Providers

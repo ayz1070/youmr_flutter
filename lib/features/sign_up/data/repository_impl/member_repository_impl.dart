@@ -30,6 +30,12 @@ class MemberRepositoryImpl implements MemberRepository {
   }
 
   @override
+  Future<MemberEntity> fetchMemberBySocialId(String socialId) async {
+    final response = await dataSource.fetchMemberBySocialId(socialId);
+    return response.toEntity();
+  }
+
+  @override
   Future<void> deleteMember(int memberId) async {
     await dataSource.deleteMember(memberId);
   }

@@ -5,5 +5,9 @@ abstract class MemberRepository {
 
   Future<MemberEntity> fetchMember(int memberId);
 
+  Future<MemberEntity> fetchMemberBySocialId(String socialId);
+
   Future<void> deleteMember(int memberId);
+
+
 }
