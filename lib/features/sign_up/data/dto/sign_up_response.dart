@@ -28,7 +28,7 @@ class SignUpResponse {
 
   factory SignUpResponse.fromJson(Map<String, dynamic> json) {
     return SignUpResponse(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       socialId: json['socialId'] as String,
       provider: SocialProviderExtension.fromServerValue(json['provider'] as String),
       name: json['name'] as String,

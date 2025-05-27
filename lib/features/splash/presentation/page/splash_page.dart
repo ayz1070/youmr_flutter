@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:youmr_flutter/core/di/auth_module.dart';
+import '../provider/member_provider.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
@@ -14,15 +16,26 @@ class _SplashPageState extends ConsumerState<SplashPage> {
   @override
   void initState() {
     super.initState();
-    _checkLoginStatus();
+    _initialize();
   }
 
-  Future<void> _checkLoginStatus() async {
+  Future<void> _initialize() async {
     await Future.delayed(const Duration(milliseconds: 800)); // 스플래시 연출용
-    final user = FirebaseAuth.instance.currentUser;
+    final firebaseUser = FirebaseAuth.instance.currentUser;
 
-    if (user != null) {
-      context.go('/home');
+    if (firebaseUser != null) {
+      try {
+        // 사용자 정보 서버에서 fetch
+        final member = await ref.read(fetchMemberBySocialIdUseCaseProvider).call(socialId: firebaseUser.uid);
+
+        // 전역 상태에 저장
+        ref.read(memberProvider.notifier).setMember(member);
+
+        context.go('/home');
+      } catch (e) {
+        // 에러 발생 시 로그인 화면으로 이동
+        context.go('/sign-in');
+      }
     } else {
       context.go('/sign-in');
     }
@@ -33,7 +46,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
     return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Text("스플래쉬 화면"), // 로딩 UI
+        child: Text("스플래쉬 화면"),
       ),
     );
   }

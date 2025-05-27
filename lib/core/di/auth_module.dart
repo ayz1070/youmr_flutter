@@ -36,7 +36,7 @@ final signInUseCaseProvider = Provider<SignInWithSocialAccountUseCase>((ref) {
   return SignInWithSocialAccountUseCase();
 });
 
-final fetchMemberBySocialIdUseCase = Provider<FetchMemberBySocialIdUseCase>((ref) {
+final fetchMemberBySocialIdUseCaseProvider = Provider<FetchMemberBySocialIdUseCase>((ref) {
   return FetchMemberBySocialIdUseCase(ref.read(memberRepositoryProvider));
 });
 

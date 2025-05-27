@@ -4,7 +4,7 @@ import 'package:youmr_flutter/features/gemini/presentation/page/gemini_page.dart
 import '../../features/home/presentation/page/home_page.dart';
 import '../../features/sign_up/presentation/pages/sign_in_page.dart';
 import '../../features/sign_up/presentation/pages/sign_up_page.dart';
-import '../../features/splash/page/splash_page.dart';
+import '../../features/splash/presentation/page/splash_page.dart';
 import '../../features/test/test_page.dart';
 
 final GoRouter router = GoRouter(

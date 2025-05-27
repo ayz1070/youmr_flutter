@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:youmr_flutter/core/util/app_logger.dart';
 import '../../../../core/error/error_handler.dart';
 import '../dto/member_response.dart';
 import '../dto/sign_up_response.dart';
@@ -35,6 +36,8 @@ class MemberRemoteDataSource implements MemberDataSource {
   Future<MemberResponse> fetchMember(int memberId) async {
     try {
       final response = await dio.get('$_endPoint/$memberId');
+      AppLogger.i("${response.data}");
+
       return MemberResponse.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception(handleDioError(e, '회원 정보 조회 실패'));
