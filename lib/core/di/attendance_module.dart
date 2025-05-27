@@ -50,5 +50,6 @@ final attendanceViewModelProvider =
         createAttendanceUseCase: ref.watch(createAttendanceUseCaseProvider),
         fetchAttendancesUseCase: ref.watch(fetchAttendancesUseCaseProvider),
         deleteAttendanceUseCase: ref.watch(deleteAttendanceUseCaseProvider),
+        ref: ref,
       ),
     );

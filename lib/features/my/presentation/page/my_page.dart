@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:youmr_flutter/features/splash/presentation/provider/member_provider.dart';
+
+import '../../../../core/widget/common_app_bar.dart';
 
 class MyPage extends ConsumerWidget {
   const MyPage({super.key});
@@ -11,14 +14,8 @@ class MyPage extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          '마이페이지',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
+      appBar: CommonAppBar(
+        title: "마이페이지",
       ),
       body: Column(
         children: [
@@ -29,13 +26,11 @@ class MyPage extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 64,
-                  backgroundImage: NetworkImage(
-                    member?.profileImage ?? '',
-                  ),
+                  backgroundImage: NetworkImage(member?.profileImage ?? ''),
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  member?.name ?? '',
+                  member?.nickname ?? '',
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -43,8 +38,11 @@ class MyPage extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  member?.weekType!.name ?? '',
-                  style: const TextStyle(fontSize: 16, color: Color(0xFF49709C)),
+                  member?.weekType?.name ?? '',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF49709C),
+                  ),
                 ),
               ],
             ),
@@ -53,7 +51,9 @@ class MyPage extends ConsumerWidget {
           // Menu Items
           _buildMenuItem(context, '프로필 수정', () => print('프로필 수정 클릭됨')),
           _buildMenuItem(context, '연습실 위치', () => print('연습실 위치 클릭됨')),
-          _buildMenuItem(context, '오픈 라이선스', () => print('오픈 라이선스 클릭됨')),
+          _buildMenuItem(context, '오픈 라이선스', () {
+            context.push('/license');
+          }),
           _buildMenuItem(context, '로그아웃', () => print('로그아웃 클릭됨')),
 
           const Spacer(),
@@ -62,16 +62,18 @@ class MyPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildMenuItem(BuildContext context, String title, VoidCallback onTap) {
+  Widget _buildMenuItem(
+    BuildContext context,
+    String title,
+    VoidCallback onTap,
+  ) {
     return InkWell(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         height: 64,
         decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: Color(0xFFE7EDF4)),
-          ),
+          border: Border(bottom: BorderSide(color: Color(0xFFE7EDF4))),
         ),
         child: Row(
           children: [

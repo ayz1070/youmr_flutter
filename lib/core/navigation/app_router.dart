@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youmr_flutter/features/gemini/presentation/page/gemini_page.dart';
 
@@ -23,6 +24,9 @@ final GoRouter router = GoRouter(
     GoRoute(path: '/home', builder: (context, state) => HomePage()),
 
     GoRoute(path: '/gemini', builder: (context, state) => GeminiPage()),
+
+
+    GoRoute(path: '/license', builder: (context, state) => LicensePage()),
 
 
     // 관리자 라우팅
