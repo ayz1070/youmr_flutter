@@ -4,7 +4,6 @@ import '../../domain/entity/role.dart';
 import '../../domain/entity/member_entity.dart';
 import '../../domain/entity/week_type.dart'; // 실제 Entity 경로에 맞게 수정
 
-
 class MemberResponse {
   final int id;
   final String socialId;
@@ -27,19 +26,22 @@ class MemberResponse {
   });
 
   factory MemberResponse.fromJson(Map<String, dynamic> json) => MemberResponse(
-    id: json['id'] as int,
+    id: json['id'] != null ? json['id'] as int : 0,
     socialId: json['socialId'] as String,
-    provider: SocialProviderExtension.fromServerValue(json['provider'] as String),
+    provider: SocialProviderExtension.fromServerValue(
+      json['provider'] as String,
+    ),
     name: json['name'] as String,
     nickname: json['nickname'] as String,
     profileImageUrl: json['profileImageUrl'] as String,
     role: RoleExtension.fromServerValue(json['role'] as String),
-    weekType: json['weekType'] != null
-        ? WeekType.values.firstWhere(
-          (e) => e.name == json['weekType'],
-      orElse: () => WeekType.MONDAY,
-    )
-        : null,
+    weekType:
+        json['weekType'] != null
+            ? WeekType.values.firstWhere(
+              (e) => e.name == json['weekType'],
+              orElse: () => WeekType.MONDAY,
+            )
+            : null,
   );
 
   Map<String, dynamic> toJson() => {

@@ -3,7 +3,6 @@ import '../../../../core/constants/social_provider.dart';
 import '../../domain/entity/role.dart';
 import '../../domain/entity/member_entity.dart'; // 실제 Entity 경로에 맞게 수정
 
-@JsonSerializable()
 class SocialSignUpRequestDto {
   final String socialId;
   final SocialProvider provider;
