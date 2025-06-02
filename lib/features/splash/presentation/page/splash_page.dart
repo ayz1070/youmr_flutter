@@ -50,7 +50,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
       backgroundColor: AppColors.primary,
       body: Center(
         child: Container(
-          height: 72,
+          height: 150,
           child: Image.asset("lib/assets/icons/app_icon.png"),
         ),
       ),
