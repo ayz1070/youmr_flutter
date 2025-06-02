@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // 기본 색상 (Light Mode)
-  static const Color primary = Colors.blueAccent;
+  static const Color primary = Color(0xFF448AFF);
   static const Color secondary = Color(0xFF03DAC6);
   static const Color background = Color(0xFFFFFFFF); // 흰색 배경
   static const Color surface = Color(0xFFF5F5F5); // 연한 회색 배경
