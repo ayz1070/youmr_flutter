@@ -50,97 +50,99 @@ class _SignUpMemberCheckStepState extends ConsumerState<SignUpMemberCheckStep>
       opacity: _fade,
       child: ScaleTransition(
         scale: _scale,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                '여민락 회원이십니까?',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 36),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _CustomRadio(
-                    label: '네',
-                    value: true,
-                    groupValue: isOfflineMember,
-                    onChanged: (value) {
-                      ref
-                          .read(signUpViewModelProvider.notifier)
-                          .setOfflineMember(true);
-                    },
-                  ),
-                  const SizedBox(width: 32),
-                  _CustomRadio(
-                    label: '아니요',
-                    value: false,
-                    groupValue: isOfflineMember,
-                    onChanged: (value) {
-                      ref
-                          .read(signUpViewModelProvider.notifier)
-                          .setOfflineMember(false);
-                      ref
-                          .read(signUpViewModelProvider.notifier)
-                          .updateWeekType(WeekType.NONE); // 요일 초기화
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 28),
-
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 300),
-                transitionBuilder:
-                    (child, animation) =>
-                        FadeTransition(opacity: animation, child: child),
-                child:
-                    isOfflineMember
-                        ? Wrap(
-                          key: const ValueKey(
-                            'weekday-selector',
-                          ), // Key로 상태 변화 추적
-                          spacing: 8,
-                          runSpacing: 8,
-                          children:
-                              WeekType.values
-                                  .where((w) => w != WeekType.NONE)
-                                  .map((weekType) {
-                                    final isSelected =
-                                        selectedWeekType == weekType;
-                                    return ChoiceChip(
-                                      label: Text(weekType.label),
-                                      selected: isSelected,
-                                      onSelected: (_) {
-                                        ref
-                                            .read(
-                                              signUpViewModelProvider.notifier,
-                                            )
-                                            .updateWeekType(weekType);
-                                      },
-                                      selectedColor: Colors.blueAccent
-                                          .withOpacity(0.2),
-                                      labelStyle: TextStyle(
-                                        color:
-                                            isSelected
-                                                ? Colors.blueAccent
-                                                : Colors.black87,
-                                        fontWeight:
-                                            isSelected
-                                                ? FontWeight.bold
-                                                : FontWeight.normal,
-                                      ),
-                                    );
-                                  })
-                                  .toList(),
-                        )
-                        : const SizedBox(
-                          key: ValueKey('empty'),
-                        ), // 빈 상태도 key 부여해야 정상 작동
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 40.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  '여민락 회원이십니까?',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 36),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _CustomRadio(
+                      label: '네',
+                      value: true,
+                      groupValue: isOfflineMember,
+                      onChanged: (value) {
+                        ref
+                            .read(signUpViewModelProvider.notifier)
+                            .setOfflineMember(true);
+                      },
+                    ),
+                    const SizedBox(width: 32),
+                    _CustomRadio(
+                      label: '아니요',
+                      value: false,
+                      groupValue: isOfflineMember,
+                      onChanged: (value) {
+                        ref
+                            .read(signUpViewModelProvider.notifier)
+                            .setOfflineMember(false);
+                        ref
+                            .read(signUpViewModelProvider.notifier)
+                            .updateWeekType(WeekType.NONE); // 요일 초기화
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 28),
+          
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder:
+                      (child, animation) =>
+                          FadeTransition(opacity: animation, child: child),
+                  child:
+                      isOfflineMember
+                          ? Wrap(
+                            key: const ValueKey(
+                              'weekday-selector',
+                            ), // Key로 상태 변화 추적
+                            spacing: 8,
+                            runSpacing: 8,
+                            children:
+                                WeekType.values
+                                    .where((w) => w != WeekType.NONE)
+                                    .map((weekType) {
+                                      final isSelected =
+                                          selectedWeekType == weekType;
+                                      return ChoiceChip(
+                                        label: Text(weekType.label),
+                                        selected: isSelected,
+                                        onSelected: (_) {
+                                          ref
+                                              .read(
+                                                signUpViewModelProvider.notifier,
+                                              )
+                                              .updateWeekType(weekType);
+                                        },
+                                        selectedColor: Colors.blueAccent
+                                            .withOpacity(0.2),
+                                        labelStyle: TextStyle(
+                                          color:
+                                              isSelected
+                                                  ? Colors.blueAccent
+                                                  : Colors.black87,
+                                          fontWeight:
+                                              isSelected
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal,
+                                        ),
+                                      );
+                                    })
+                                    .toList(),
+                          )
+                          : const SizedBox(
+                            key: ValueKey('empty'),
+                          ), // 빈 상태도 key 부여해야 정상 작동
+                ),
+              ],
+            ),
           ),
         ),
       ),
