@@ -91,3 +91,5 @@ flutter run
 ## 🙏 감사의 말
 
 여민락 동호회원 여러분의 소중한 피드백과 지원에 감사드립니다.
+# 기능 명세서 v1.3.1
+https://docs.google.com/spreadsheets/d/1sFHJxynpasPJkU6XI1rjRXc2VqI81XV-nvTmGqR4r6M/edit?gid=0#gid=0
