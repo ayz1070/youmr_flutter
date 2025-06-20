@@ -1,4 +1,4 @@
-# 🎸 YouMR (You Music Room)
+# 🎸 YouMR (You Make Rythm)
 
 <div align="center">
   <img src="lib/assets/icons/app_icon.png" alt="YouMR Logo" width="200"/>
